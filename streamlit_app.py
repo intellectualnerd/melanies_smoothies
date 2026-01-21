@@ -31,8 +31,23 @@ ingredients_list = st.multiselect(
     max_selections=5
 )
 
-# Create ingredients string safely
-ingredients_string = " ".join(ingredients_list)
+if ingredients_list:
+    # Build ingredients string safely
+    ingredients_string = " ".join(ingredients_list)
+
+    # Call API ONCE (not inside loop)
+    smoothiefroot_response = requests.get(
+        "https://my.smoothiefroot.com/api/fruit/watermelon"
+    )
+
+    if smoothiefroot_response.status_code == 200:
+        st.dataframe(
+            smoothiefroot_response.json(),
+            use_container_width=True
+        )
+    else:
+        st.error("Failed to fetch SmoothieFroot data")
+
 
 # Submit button
 time_to_submit = st.button("Submit Order")
@@ -51,10 +66,7 @@ if time_to_submit:
 
         st.success("Your Smoothie is Ordered ✅")
 
-# External API call (display correctly)
-smoothiefroot_response = requests.get(
-    "https://my.smoothiefroot.com/api/fruit/watermelon"
-)
+    
 
 if smoothiefroot_response.status_code == 200:
     st.json(smoothiefroot_response.json())
