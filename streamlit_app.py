@@ -43,4 +43,10 @@ time_to_submit = st.button("Submit Order")
 if time_to_submit:
     session.sql(my_insert_stmt).collect()
     st.success("Your Smoothie is Ordered", icon="✅")
+
+
+import requests
+smoothiefroot_response = requests.get("https://my.smoothiefroot.com/api/fruit/watermelon")
+st.text(smoothiefroot_response)
+
         
