@@ -1,37 +1,5 @@
 # Import python packages
 import streamlit as st
-from snowflake.snowpark.functions import col
-import requests
-
-# App title
-st.title("🥤 Customize Your Smoothie! 🥤")
-st.write("Choose the fruits you want in your custom smoothie")
-
-# Input
-name_on_order = st.text_input("Name On Smoothie:")
-
-# Snowflake connection
-cnx = st.connection("snowflake")
-session = cnx.session()
-
-# Fetch fruit list from Snowflake → convert to Pandas → list
-df = (
-    session
-    .table("SMOOTHIES.PUBLIC.FRUIT_OPTIONS")
-    .select(col("FRUIT_NAME"))
-    .to_pandas()
-)
-
-fruit_list = df["FRUIT_NAME"].tolist()
-
-# Multiselect expects a list
-ingredients_list = st.multiselect(
-    "Choose up to 5 ingredients:",
-    fruit_list,
-    max_selections=5
-)
-# Import python packages
-import streamlit as st
 import requests
 from snowflake.snowpark.functions import col
 
