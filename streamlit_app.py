@@ -24,7 +24,7 @@ session = cnx.session()
 my_dataframe = (
     session
     .table("smoothies.public.fruit_options")
-    .select(col("SEARCH_ON"))
+    .select(col("FRUIT_NAME"), col("SEARCH_ON"))
 )
 
 # Multiselect for ingredients
